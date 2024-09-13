@@ -1,0 +1,7 @@
+C:\Users\uo270394\source\repos\Aleatorio\Aleatorio\bin\Debug\Aleatorio.exe.config
+C:\Users\uo270394\source\repos\Aleatorio\Aleatorio\bin\Debug\Aleatorio.exe
+C:\Users\uo270394\source\repos\Aleatorio\Aleatorio\bin\Debug\Aleatorio.pdb
+C:\Users\uo270394\source\repos\Aleatorio\Aleatorio\obj\Debug\Aleatorio.csproj.AssemblyReference.cache
+C:\Users\uo270394\source\repos\Aleatorio\Aleatorio\obj\Debug\Aleatorio.csproj.CoreCompileInputs.cache
+C:\Users\uo270394\source\repos\Aleatorio\Aleatorio\obj\Debug\Aleatorio.exe
+C:\Users\uo270394\source\repos\Aleatorio\Aleatorio\obj\Debug\Aleatorio.pdb
