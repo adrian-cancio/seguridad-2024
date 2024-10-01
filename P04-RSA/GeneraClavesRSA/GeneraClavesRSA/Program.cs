@@ -48,12 +48,29 @@ namespace GeneraClavesRSA
             ayuda.WriteHex(PrimeQ, PrimeQ.Length);
             Console.WriteLine();
 
-            // TODO: Guardar en fichero texto plano
+            String[] nombresFich = new string[] { "d.txt", "e.txt", "n.txt", "p.txt", "q.txt" };
+            byte[][] buffers = new byte[][] { PrivateExponent, PublicExponent, Module, PrimeP, PrimeQ };
+            for (int i = 0; i < nombresFich.Length; i++)
+            {
+                FileStream Fs = new FileStream(nombresFich[i], FileMode.Create, FileAccess.Write, FileShare.None);
+                StreamWriter Sw = new StreamWriter(Fs);
+                string resultado = BitConverter.ToString(buffers[i]).Replace("-", "");
+                Sw.Write(resultado);
+                Sw.Close();
+                Fs.Close();
+            }
+
 
             // Exportar a blob
             DateTime fecha = DateTime.Now;
             String rutaBase = "..\\..\\..\\..\\ClavesGeneradas\\";
             String baseFich = "zz_BlobRSA_" + fecha.ToString("yyyyMMdd_HHmmss");
+
+            // Verificar si existe el directorio
+            if (!Directory.Exists(rutaBase))
+            {
+                Directory.CreateDirectory(rutaBase);
+            }
 
             // Con clave privada
             byte[] cspBlobPriv = rsa.ExportCspBlob(true);
