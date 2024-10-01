@@ -63,7 +63,7 @@ namespace GeneraClavesRSA
 
             // Exportar a blob
             DateTime fecha = DateTime.Now;
-            String rutaBase = "..\\..\\..\\..\\ClavesGeneradas\\";
+            String rutaBase = "..\\..\\..\\..\\Compartido\\";
             String baseFich = "zz_BlobRSA_" + fecha.ToString("yyyyMMdd_HHmmss");
 
             // Verificar si existe el directorio

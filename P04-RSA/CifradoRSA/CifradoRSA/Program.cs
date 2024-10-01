@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
@@ -18,7 +19,22 @@ namespace CifradoRSA
 
             Console.WriteLine("Longitud de la clave: {0} bits", rsa.KeySize);
 
-            String nombreFichBlobPubli = "zz_BlobRSA_Publi.bin";
+            String rutaBase = "..\\..\\..\\..\\Compartido\\";
+            String rutaBaseAbsoluta = Path.GetFullPath(rutaBase);
+            if (!Directory.Exists(rutaBase))
+            {
+                Console.WriteLine("No se encuentra la carpeta Compartido en la ruta: {0}", rutaBaseAbsoluta);
+                return;
+            }
+
+            // Lista de ficheros de claves dentro de la carpeta ClavesGeneradas con el patron zz_BlobRSA*_Publi.bin
+            String[] listaFicheros = Directory.GetFiles(rutaBase, "zz_BlobRSA*_Publi.bin");
+
+            //String nombreFichBlobPubli = "zz_BlobRSA_Publi.bin";
+
+            // Elegimos la ultima clave publica generada
+            String nombreFichBlobPubli = listaFicheros[listaFicheros.Length - 1];
+
 
             byte[] blobFich = new byte[ayuda.BytesFichero(nombreFichBlobPubli)];
 
@@ -34,14 +50,12 @@ namespace CifradoRSA
             ayuda.WriteHex(rsaParameters.Modulus, rsaParameters.Modulus.Length);
             Console.WriteLine();
 
-            byte[] textoPlano = new byte[64];
+            Console.WriteLine("Introduce el texto plano: ");
+            String textoPlanoStr = Console.ReadLine();
+            byte[] textoPlano = Encoding.UTF8.GetBytes(textoPlanoStr);
 
-            for (int i = 0; i < textoPlano.Length; i++)
-            {
-                textoPlano[i] = (byte) i;
-            }
-
-            Console.WriteLine("Texto plano:");
+            Console.WriteLine();
+            Console.WriteLine("Texto plano en bytes:");
             ayuda.WriteHex(textoPlano, textoPlano.Length);
             Console.WriteLine();
 
@@ -50,7 +64,13 @@ namespace CifradoRSA
             Console.WriteLine("Texto cifrado:");
             ayuda.WriteHex(textoCifrado, textoCifrado.Length);
 
-            String nombreFichCifrado = "zz_TextoCifrado.bin";
+            Console.WriteLine();
+
+            DateTime dateTime = DateTime.Now;
+
+
+            String nombreFichCifrado = "zz_TextoCifrado_"+ dateTime.ToString("yyyyMMddHHmmss") + ".bin";
+            Console.WriteLine("Guardando el texto cifrado en el fichero:\n{0}", rutaBaseAbsoluta+nombreFichCifrado);
 
             ayuda.GuardaBufer(nombreFichCifrado, textoCifrado);
 
