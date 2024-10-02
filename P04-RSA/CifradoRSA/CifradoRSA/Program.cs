@@ -72,7 +72,7 @@ namespace CifradoRSA
             String nombreFichCifrado = "zz_TextoCifrado_"+ dateTime.ToString("yyyyMMddHHmmss") + ".bin";
             Console.WriteLine("Guardando el texto cifrado en el fichero:\n{0}", rutaBaseAbsoluta+nombreFichCifrado);
 
-            ayuda.GuardaBufer(nombreFichCifrado, textoCifrado);
+            ayuda.GuardaBufer(rutaBase+nombreFichCifrado, textoCifrado);
 
 
 

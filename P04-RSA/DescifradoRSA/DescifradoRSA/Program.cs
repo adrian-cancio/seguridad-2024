@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
@@ -15,7 +16,10 @@ namespace DescifradoRSA
             Ayuda ayuda = new Ayuda();
             RSACryptoServiceProvider rsa = new RSACryptoServiceProvider(1024);
 
-            String nombreFichBlobPriv = "zz_BlobRSA_Priva.bin";
+            String rutaBase = "..\\..\\..\\..\\Compartido\\";
+            String[] listaFicheros = Directory.GetFiles(rutaBase, "zz_BlobRSA*_Priv.bin");
+
+            String nombreFichBlobPriv = listaFicheros[listaFicheros.Length - 1];
 
             byte[] fichBlobPriv = new byte[ayuda.BytesFichero(nombreFichBlobPriv)];
 
@@ -37,8 +41,34 @@ namespace DescifradoRSA
             ayuda.WriteHex(rsaParameters.Q, rsaParameters.Q.Length);
             Console.WriteLine();
 
-            String nombreFichCifr = "zz_TextoCifrado.bin";
+            String[] fichCifrados = Directory.GetFiles(rutaBase, "zz_TextoCifrado_*.bin");
+            byte[] textoCifrado;
+            byte[] textoPlano;
+            // Recorrer todos los archivos cifrados y ver si ya estan descifrados
+            for (int i = 0; i < fichCifrados.Length; i++)
+            {
+                // Comprobar si existe esa version del archivo archivo descifrado
+                String nombreFichDescif = fichCifrados[i].Replace("TextoCifrado", "TextoDescifrado");
+                nombreFichDescif = nombreFichDescif.Replace(".bin", ".txt");
 
+                if (!File.Exists(nombreFichDescif))
+                {
+                    textoCifrado = new byte[ayuda.BytesFichero(fichCifrados[i])];
+                    ayuda.CargaBufer(fichCifrados[i], textoCifrado);
+                    Console.WriteLine("Texto cifrado:");
+                    ayuda.WriteHex(textoCifrado, textoCifrado.Length);
+                    Console.WriteLine();
+
+                    textoPlano = rsa.Decrypt(textoCifrado, true);
+                    Console.WriteLine("Texto descifrado:");
+                    ayuda.WriteHex(textoPlano, textoPlano.Length);
+
+                    ayuda.GuardaBufer(nombreFichDescif, textoPlano);
+                }
+            }
+          
+
+            /*
             byte[] textoCifrado = new byte[ayuda.BytesFichero(nombreFichCifr)];
             ayuda.CargaBufer(nombreFichCifr, textoCifrado);
             Console.WriteLine("Texto cifrado:");
@@ -48,7 +78,7 @@ namespace DescifradoRSA
             byte[] textoPlano = rsa.Decrypt(textoCifrado, true);
             Console.WriteLine("Texto descifrado:");
             ayuda.WriteHex(textoPlano, textoPlano.Length);
-
+            */
 
         }
     }
