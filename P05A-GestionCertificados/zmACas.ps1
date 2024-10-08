@@ -1,0 +1,1 @@
+.\Herramientas\CerTools64bits\MakeCert.exe -n "CN=zmAC.as" `-r -pe -cy authority -# 1 -len 2048 -a sha256 `-sv .\Certificados\zmACas.pvk .\Certificados\zmACas.cer 

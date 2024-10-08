@@ -1,0 +1,1 @@
+.\Herramientas\CerTools64bits\MakeCert.exe -n "CN=zmSER.as" `-pe -cy end -ic .\Certificados\zmACas.cer -iv .\Certificados\zmACas.pvk `-sky Exchange -len 2048 -a sha256 -sv .\Certificados\zmSERas.pvk `.\Certificados\zmSERas.cer
