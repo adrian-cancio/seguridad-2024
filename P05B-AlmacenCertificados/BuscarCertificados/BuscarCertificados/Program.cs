@@ -17,7 +17,7 @@ namespace BuscarCertificados
             {
                 Console.WriteLine("Certificado encontrado");
                 Console.WriteLine();
-                Console.WriteLine("Sujeto: {0}", cert.SubjectName);
+                Console.WriteLine("Sujeto: {0}", cert.SubjectName.Name);
                 Console.WriteLine("Emisor: {0}", cert.Issuer);
                 Console.WriteLine("Número de serie: {0}", cert.SerialNumber);
                 Console.WriteLine("Válido desde: {0}", cert.NotBefore);
