@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29411.108
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "practica5B_BuscarCerts", "practica5B_BuscarCerts\practica5B_BuscarCerts.csproj", "{F11EDFEF-8A53-4FBC-8133-076BBA45CDEB}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F11EDFEF-8A53-4FBC-8133-076BBA45CDEB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F11EDFEF-8A53-4FBC-8133-076BBA45CDEB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F11EDFEF-8A53-4FBC-8133-076BBA45CDEB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F11EDFEF-8A53-4FBC-8133-076BBA45CDEB}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {CD143446-776B-48E9-86D0-FF1279C2D1C4}
+	EndGlobalSection
+EndGlobal

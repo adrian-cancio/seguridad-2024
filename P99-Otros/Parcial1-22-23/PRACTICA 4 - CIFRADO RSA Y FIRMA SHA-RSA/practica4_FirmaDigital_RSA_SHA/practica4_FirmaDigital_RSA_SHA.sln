@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29411.108
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "practica4_FirmaDigital_RSA_SHA", "practica4_FirmaDigital_RSA_SHA\practica4_FirmaDigital_RSA_SHA.csproj", "{15BFCFBC-77FF-4A62-A707-8A5F8782E298}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{15BFCFBC-77FF-4A62-A707-8A5F8782E298}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{15BFCFBC-77FF-4A62-A707-8A5F8782E298}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{15BFCFBC-77FF-4A62-A707-8A5F8782E298}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{15BFCFBC-77FF-4A62-A707-8A5F8782E298}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {DB32184D-BBEC-46CB-929D-5AED2395A6E4}
+	EndGlobalSection
+EndGlobal

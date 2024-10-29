@@ -1,0 +1,1 @@
+makecert.exe -pe -n CN=zzCLIjosecarlos -ic zzACjosecarlos.cer -iv zzACjosecarlos.pvk -sky exchange -sv zzCLIjosecarlos.pvk  zzCLIjosecarlos.cer

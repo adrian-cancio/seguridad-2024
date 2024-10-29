@@ -1,0 +1,1 @@
+makecert.exe -r -pe -n CN=zzACjosecarlos -# 1 -cy authority -sv zzACjosecarlos.pvk  zzACjosecarlos.cer

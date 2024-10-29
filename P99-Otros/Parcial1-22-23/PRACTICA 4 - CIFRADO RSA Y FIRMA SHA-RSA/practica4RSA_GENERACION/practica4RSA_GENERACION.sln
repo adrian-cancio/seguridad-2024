@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28010.2050
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "practica4RSA_GENERACION", "practica4RSA_GENERACION.csproj", "{512D315F-9C15-4B5A-A99F-B6A5B52DBF50}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{512D315F-9C15-4B5A-A99F-B6A5B52DBF50}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{512D315F-9C15-4B5A-A99F-B6A5B52DBF50}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{512D315F-9C15-4B5A-A99F-B6A5B52DBF50}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{512D315F-9C15-4B5A-A99F-B6A5B52DBF50}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {45EC4D9D-6C0D-4116-9805-46B9C8C36B89}
+	EndGlobalSection
+EndGlobal
