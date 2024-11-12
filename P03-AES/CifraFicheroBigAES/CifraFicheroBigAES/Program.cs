@@ -35,6 +35,8 @@ namespace CifraFicheroBigAES
             aes.Padding = PaddingMode.ISO10126;
             aes.Mode = CipherMode.ECB;
 
+            Console.WriteLine(aes.IV.Length);
+
             Console.WriteLine("Datos modificados de AES:");
             Console.WriteLine("Block size: " + aes.BlockSize);
             Console.WriteLine("Key size: " + aes.KeySize);
