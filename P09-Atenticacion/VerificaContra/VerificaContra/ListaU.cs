@@ -79,11 +79,12 @@ namespace VerificaContra
             // comprobar si existe el usuario
             foreach (User usuario in lista)
             {
-                Console.WriteLine(usuario);
+
                 if (usuario != null)
                 {
-                    String nameStr = new String(usuario.name);
-                    if (nameStr.Equals(name))
+        
+                    bool existeUsuario =  name == usuario.getName();
+                    if (existeUsuario)
                     {
                         // comprobar si la contraseña es correcta
                         if (usuario.Verifica(password))
@@ -99,6 +100,7 @@ namespace VerificaContra
             }
             return 1;
         }
+
     }
 }
 

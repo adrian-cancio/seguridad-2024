@@ -40,6 +40,14 @@ namespace VerificaContra
                 Console.WriteLine("Contraseña incorrecta");
             }
 
+            LU.GuardaListaTxt("zz_Usuarios.txt");
+            LU.GuardaListaBin("zz_Usuarios.bin");
+
+            int txt = User.VerificaTxt("zz_Usuarios.txt", nombre, contra);
+            Console.WriteLine("txt output: {0}",txt);
+
+            int bin = User.VerificaBin("zz_Usuarios.bin", nombre, contra);
+            Console.WriteLine("bin output: {0}", bin);
 
         }
     }

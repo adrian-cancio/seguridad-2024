@@ -69,6 +69,20 @@ namespace VerificaContra
             return true;
         }
 
+        public String getName()
+        {
+            StringBuilder stringBuilder = new StringBuilder();
+            for (int i = 0; i < NAME_MAX_LENGTH; i++)
+            {
+                if (this.name[i] == '\0')
+                {
+                    break;
+                }
+                stringBuilder.Append(this.name[i]);
+            }
+            return stringBuilder.ToString();
+        }
+
         override public String ToString()
         {
             StringBuilder stringBuilder = new StringBuilder();
@@ -79,6 +93,79 @@ namespace VerificaContra
             stringBuilder.Append("\nHash: ");
             stringBuilder.Append(BitConverter.ToString(this.hash).Replace("-", ""));
             return stringBuilder.ToString();
+        }
+
+        public static int VerificaTxt(String nombreFich, String name, String password)
+        {
+            if (!System.IO.File.Exists(nombreFich))
+            {
+                throw new ArgumentNullException("File not found");
+            }
+
+            using (System.IO.StreamReader reader = new System.IO.StreamReader(nombreFich, Encoding.ASCII))
+            {
+                while (!reader.EndOfStream)
+                {
+                    String line = reader.ReadLine();
+                    line = line.Replace("\0", "");
+
+                    if (line == name)
+                    {
+                        byte[] salt = Convert.FromBase64String(reader.ReadLine());
+                        byte[] hash = Convert.FromBase64String(reader.ReadLine());
+                        User user = new User(name, password);
+                        user.salt = salt;
+                        user.hash = hash;
+                        if (user.Verifica(password))
+                        {
+                            return 0;
+                        }
+                        else
+                        {
+                            return 2;
+                        }
+                    }
+                    reader.ReadLine();
+                    reader.ReadLine();
+                }
+            }
+            return 1;
+        }
+
+        public static int VerificaBin(String nombreFich, String name, String password)
+        {
+            if (!System.IO.File.Exists(nombreFich))
+            {
+                throw new ArgumentNullException("File not found");
+            }
+
+            using (System.IO.BinaryReader reader = new System.IO.BinaryReader(System.IO.File.Open(nombreFich, System.IO.FileMode.Open)))
+            {
+                while (reader.BaseStream.Position != reader.BaseStream.Length)
+                {
+                    byte[] lineBytes = reader.ReadBytes(NAME_MAX_LENGTH);
+                    String line = Encoding.UTF8.GetString(lineBytes);
+                    line = line.Replace("\0", "");
+
+                    if (line == name)
+                    {
+                        byte[] salt = reader.ReadBytes(SALT_BYTES);
+                        byte[] hash = reader.ReadBytes(HASH_BYTES);
+                        User user = new User(name, password);
+                        user.salt = salt;
+                        user.hash = hash;
+                        if (user.Verifica(password))
+                        {
+                            return 0;
+                        }
+                        else
+                        {
+                            return 2;
+                        }
+                    }
+                }
+            }
+            return 1;
         }
 
 
