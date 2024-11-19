@@ -15,24 +15,27 @@ namespace VerificaContra
         private const int SALT_BYTES = 16;
         private const int HASH_BYTES = 32;
         private const int HASH_ITERATIONS = 1000;
+        // enum para elgir como generar el hash (con Rfc2898DeriveBytes o con SHA256Managed)
+        public enum HASH_METHOD { RFC, SHA256 };
 
         // Atributos
-        public char[] name { get; }
-        public byte[] salt { get; private set; }
-        public byte[] hash { get; private set; }
+        public char[] Name { get; }
+        public byte[] Salt { get; private set; }
+        public byte[] Hash { get; private set; }
+        public HASH_METHOD HashMethod { get; private set; }
 
         public User()
         {
-
-            name = new char[NAME_MAX_LENGTH];
-            salt = new byte[SALT_BYTES];
-            hash = new byte[HASH_BYTES];
+            Name = new char[NAME_MAX_LENGTH];
+            Salt = new byte[SALT_BYTES];
+            Hash = new byte[HASH_BYTES];
         }
 
-        public User(String name, String password, bool timemeter=false) : this()
+        public User(String name, String password, HASH_METHOD hashMethod = HASH_METHOD.RFC) : this()
         {
+            this.HashMethod = hashMethod;
             this.SetName(name);
-            this.SetPassword(password, timemeter);
+            this.SetPassword(password);
         }
 
         public void SetName(String name)
@@ -43,66 +46,75 @@ namespace VerificaContra
             }
             for (int i = 0; i < name.Length; i++)
             {
-                this.name[i] = name[i];
+                this.Name[i] = name[i];
             }
         }
 
-        public void SetPassword(String password, bool timemeter = false)
+        public void SetPassword(String password)
         {
             RNGCryptoServiceProvider rng = new RNGCryptoServiceProvider();
-            rng.GetBytes(this.salt);
-            
-            //Rfc2898DeriveBytes rfc = new Rfc2898DeriveBytes(password, this.salt);
-
-            byte[] nuevaContraBytes = Encoding.UTF8.GetBytes(password);
-
-            byte[] saltYContra = new byte[nuevaContraBytes.Length + this.salt.Length];
-
-            this.salt.CopyTo(saltYContra, 0);
-
-            nuevaContraBytes.CopyTo(saltYContra, this.salt.Length);
-
-            SHA256Managed provSHA = new SHA256Managed();
-
-            //rfc.IterationCount = HASH_ITERATIONS;
-            
-            if (timemeter)
+            rng.GetBytes(this.Salt);
+            if (this.HashMethod == HASH_METHOD.RFC)
             {
-                Stopwatch crono = new Stopwatch();
-                crono.Start();
-                this.hash = provSHA.ComputeHash(saltYContra);
-                //this.hash = rfc.GetBytes(HASH_BYTES);
-                crono.Stop();
-                Console.WriteLine("Time (ms): " + crono.ElapsedMilliseconds);
-                long Frecuencia = Stopwatch.Frequency;
-                double Tresu = ((double)(1000000L * crono.ElapsedTicks)) / Frecuencia;
-                Console.WriteLine("Time (µs): " + Tresu);
+                Rfc2898DeriveBytes rfc = new Rfc2898DeriveBytes(password, this.Salt)
+                {
+                    IterationCount = HASH_ITERATIONS
+                };
+
+                this.Hash = rfc.GetBytes(HASH_BYTES);
             }
-            else
+
+            if (this.HashMethod == HASH_METHOD.SHA256)
             {
-                this.hash = provSHA.ComputeHash(saltYContra);
-                //this.hash = rfc.GetBytes(HASH_BYTES);
+
+
+                byte[] passwordBytes = Encoding.UTF8.GetBytes(password);
+
+                byte[] passwordAndSalt = new byte[passwordBytes.Length + this.Salt.Length];
+
+                this.Salt.CopyTo(passwordAndSalt, 0);
+
+                passwordBytes.CopyTo(passwordAndSalt, this.Salt.Length);
+
+                SHA256Managed provSHA = new SHA256Managed();
+
+                this.Hash = provSHA.ComputeHash(passwordAndSalt);
+
+
             }
-            
+
         }
 
         public bool Verifica(string password)
         {
-            //Rfc2898DeriveBytes rfc = new Rfc2898DeriveBytes(password, this.salt);
-            //rfc.IterationCount = HASH_ITERATIONS;
-            //byte[] hash = rfc.GetBytes(HASH_BYTES);
+            byte[] hash = new byte[HASH_BYTES];
 
-            SHA256Managed provSHA = new SHA256Managed();
-            byte[] nuevaContraBytes = Encoding.UTF8.GetBytes(password);
-            byte[] saltYContra = new byte[nuevaContraBytes.Length + this.salt.Length];
-            this.salt.CopyTo(saltYContra, 0);
-            nuevaContraBytes.CopyTo(saltYContra, this.salt.Length);
+            if (HashMethod == HASH_METHOD.RFC)
+            {
 
-            byte[] hash = provSHA.ComputeHash(saltYContra);
+                Rfc2898DeriveBytes rfc = new Rfc2898DeriveBytes(password, this.Salt)
+                {
+                    IterationCount = HASH_ITERATIONS
+                };
+
+                hash = rfc.GetBytes(HASH_BYTES);
+            }
+
+            if (HashMethod == HASH_METHOD.SHA256)
+            {
+                SHA256Managed provSHA = new SHA256Managed();
+                byte[] passwordBytes = Encoding.UTF8.GetBytes(password);
+                byte[] passwordAndSalt = new byte[passwordBytes.Length + this.Salt.Length];
+                this.Salt.CopyTo(passwordAndSalt, 0);
+                passwordBytes.CopyTo(passwordAndSalt, this.Salt.Length);
+
+                hash = provSHA.ComputeHash(passwordAndSalt);
+            }
+
 
             for (int i = 0; i < HASH_BYTES; i++)
             {
-                if (this.hash[i] != hash[i])
+                if (this.Hash[i] != hash[i])
                 {
                     return false;
                 }
@@ -110,16 +122,16 @@ namespace VerificaContra
             return true;
         }
 
-        public String getName()
+        public String GetName()
         {
             StringBuilder stringBuilder = new StringBuilder();
             for (int i = 0; i < NAME_MAX_LENGTH; i++)
             {
-                if (this.name[i] == '\0')
+                if (this.Name[i] == '\0')
                 {
                     break;
                 }
-                stringBuilder.Append(this.name[i]);
+                stringBuilder.Append(this.Name[i]);
             }
             return stringBuilder.ToString();
         }
@@ -128,15 +140,17 @@ namespace VerificaContra
         {
             StringBuilder stringBuilder = new StringBuilder();
             stringBuilder.Append("Name: ");
-            stringBuilder.Append(this.name);
+            stringBuilder.Append(this.Name);
             stringBuilder.Append("\nSalt: ");
-            stringBuilder.Append(BitConverter.ToString(this.salt).Replace("-", ""));
+            stringBuilder.Append(BitConverter.ToString(this.Salt).Replace("-", ""));
             stringBuilder.Append("\nHash: ");
-            stringBuilder.Append(BitConverter.ToString(this.hash).Replace("-", ""));
+            stringBuilder.Append(BitConverter.ToString(this.Hash).Replace("-", ""));
+            stringBuilder.Append("\nhashMethod: ");
+            stringBuilder.Append(this.HashMethod);
             return stringBuilder.ToString();
         }
 
-        public static int VerificaTxt(String nombreFich, String name, String password)
+        public static int VerificaTxt(String nombreFich, String name, String password, HASH_METHOD hashMethod = HASH_METHOD.RFC)
         {
             if (!System.IO.File.Exists(nombreFich))
             {
@@ -154,9 +168,12 @@ namespace VerificaContra
                     {
                         byte[] salt = Convert.FromBase64String(reader.ReadLine());
                         byte[] hash = Convert.FromBase64String(reader.ReadLine());
-                        User user = new User(name, password);
-                        user.salt = salt;
-                        user.hash = hash;
+                        User user = new User(name, password)
+                        {
+                            HashMethod = hashMethod,
+                            Salt = salt,
+                            Hash = hash
+                        };
                         if (user.Verifica(password))
                         {
                             return 0;
@@ -173,7 +190,7 @@ namespace VerificaContra
             return 1;
         }
 
-        public static int VerificaBin(String nombreFich, String name, String password)
+        public static int VerificaBin(String nombreFich, String name, String password, HASH_METHOD HashMethod = HASH_METHOD.RFC)
         {
             if (!System.IO.File.Exists(nombreFich))
             {
@@ -192,9 +209,12 @@ namespace VerificaContra
                     {
                         byte[] salt = reader.ReadBytes(SALT_BYTES);
                         byte[] hash = reader.ReadBytes(HASH_BYTES);
-                        User user = new User(name, password);
-                        user.salt = salt;
-                        user.hash = hash;
+                        User user = new User(name, password)
+                        {
+                            HashMethod = HashMethod,
+                            Salt = salt,
+                            Hash = hash
+                        };
                         if (user.Verifica(password))
                         {
                             return 0;

@@ -11,11 +11,21 @@ namespace MedirTiempos
 {
     internal class Program
     {
-        static void Main(string[] args)
+        static void Main()
         {
+            User.HASH_METHOD hashMethod = User.HASH_METHOD.SHA256;
 
-            User user = new User("user", "password", true);
+            ListaU LU = new ListaU();
+            LU.IniUsu(0, new User("Antonio", "conA", hashMethod));
+            LU.IniUsu(1, new User("Benito", "conB", hashMethod));
+            LU.IniUsu(2, new User("Carlos", "conC", hashMethod));
+            LU.IniUsu(3, new User("David", "conD", hashMethod));
+            LU.IniUsu(4, new User("Eduardo", "conE", hashMethod));
+            LU.VerLista();
 
+            int res = LU.Verifica("Antoio", "con");
+
+            Console.WriteLine(res);
 
         }
     }
