@@ -38,7 +38,7 @@ namespace VerificaContra
 
         public void IniUsu(int indice, User usuario)
         {
-            if (ExisteUsuario(usuario.GetName()))
+            if (ExisteUsuario(usuario.Name))
             {
                 throw new ArgumentException("User already exists");
             }
@@ -48,7 +48,7 @@ namespace VerificaContra
 
         public void IniUsu(User usuario)
         {
-            if (ExisteUsuario(usuario.GetName()))
+            if (ExisteUsuario(usuario.Name))
             {
                 throw new ArgumentException("User already exists");
             }
@@ -61,7 +61,7 @@ namespace VerificaContra
             {
                 if (usuario != null)
                 {
-                    if (usuario.GetName() == name)
+                    if (usuario.Name == name)
                     {
                         usuario.SetPassword(password);
                         return;
@@ -76,7 +76,7 @@ namespace VerificaContra
             {
                 if (Lista[i] != null)
                 {
-                    if (Lista[i].GetName() == name)
+                    if (Lista[i].Name == name)
                     {
                         Lista.RemoveAt(i);
                         return;
@@ -99,7 +99,7 @@ namespace VerificaContra
             {
                 if (usuario != null)
                 {
-                    if (usuario.GetName() == name)
+                    if (usuario.Name == name)
                     {
                         return true;
                     }
@@ -168,8 +168,8 @@ namespace VerificaContra
             {
                 while (reader.BaseStream.Position != reader.BaseStream.Length)
                 {
-                    User usuario = new User(reader.ReadChars(User.NAME_MAX_LENGTH), reader.ReadBytes(User.SALT_BYTES), reader.ReadBytes(User.HASH_BYTES));
-                    if (this.ExisteUsuario(usuario.GetName())) { continue; }
+                    User usuario = new User(reader.ReadString(), reader.ReadBytes(User.SALT_BYTES), reader.ReadBytes(User.HASH_BYTES), this.DefaultHashMethod);
+                    if (this.ExisteUsuario(usuario.Name)) { continue; }
                     Lista.Add(usuario);
                 }
             }
@@ -186,11 +186,11 @@ namespace VerificaContra
             {
                 while (!reader.EndOfStream)
                 {
-                    char[] name = reader.ReadLine().ToCharArray();
+                    String name = reader.ReadLine();
                     byte[] salt = Convert.FromBase64String(reader.ReadLine());
                     byte[] hash = Convert.FromBase64String(reader.ReadLine());
-                    User usuario = new User(name, salt, hash);
-                    if (this.ExisteUsuario(usuario.GetName())) { continue; }
+                    User usuario = new User(name, salt, hash, this.DefaultHashMethod);
+                    if (this.ExisteUsuario(usuario.Name)) { continue; }
                     Lista.Add(usuario);
                 }
             }
@@ -207,7 +207,7 @@ namespace VerificaContra
                 if (usuario != null)
                 {
         
-                    bool existeUsuario =  name == usuario.GetName();
+                    bool existeUsuario =  name == usuario.Name;
                     if (existeUsuario)
                     {
                         // comprobar si la contraseña es correcta

@@ -14,19 +14,18 @@ namespace VerificaContra
         public const int NAME_MAX_LENGTH = 16;
         public const int SALT_BYTES = 16;
         public const int HASH_BYTES = 32;
-        public const int HASH_ITERATIONS = 1000; 
+        public const int HASH_ITERATIONS = 1000;
         // enum para elgir como generar el hash (con Rfc2898DeriveBytes o con SHA256Managed)
         public enum HASH_METHOD { RFC, SHA256 };
 
         // Atributos
-        public char[] Name { get; }
+        public String Name { get; private set; }
         public byte[] Salt { get; private set; }
         public byte[] Hash { get; private set; }
         public HASH_METHOD HashMethod { get; private set; }
 
         public User()
         {
-            Name = new char[NAME_MAX_LENGTH];
             Salt = new byte[SALT_BYTES];
             Hash = new byte[HASH_BYTES];
         }
@@ -34,28 +33,16 @@ namespace VerificaContra
         public User(String name, String password, HASH_METHOD hashMethod = HASH_METHOD.RFC) : this()
         {
             this.HashMethod = hashMethod;
-            this.SetName(name);
+            this.Name = name;
             this.SetPassword(password);
         }
 
-        public User(char[] name, byte[] salt, byte[] hash, HASH_METHOD hashMethod = HASH_METHOD.RFC) : this()
+        public User(String name, byte[] salt, byte[] hash, HASH_METHOD hashMethod = HASH_METHOD.RFC) : this()
         {
             this.HashMethod = hashMethod;
             this.Name = name;
             this.Salt = salt;
             this.Hash = hash;
-        }
-
-        public void SetName(String name)
-        {
-            if (name.Length > NAME_MAX_LENGTH)
-            {
-                throw new ArgumentException("Name too long");
-            }
-            for (int i = 0; i < name.Length; i++)
-            {
-                this.Name[i] = name[i];
-            }
         }
 
         public void SetPassword(String password)
@@ -74,16 +61,10 @@ namespace VerificaContra
 
             if (this.HashMethod == HASH_METHOD.SHA256)
             {
-
-
                 byte[] passwordBytes = Encoding.UTF8.GetBytes(password);
-
                 byte[] passwordAndSalt = new byte[passwordBytes.Length + this.Salt.Length];
-
                 this.Salt.CopyTo(passwordAndSalt, 0);
-
                 passwordBytes.CopyTo(passwordAndSalt, this.Salt.Length);
-
                 SHA256Managed provSHA = new SHA256Managed();
 
                 this.Hash = provSHA.ComputeHash(passwordAndSalt);
@@ -110,11 +91,11 @@ namespace VerificaContra
 
             if (HashMethod == HASH_METHOD.SHA256)
             {
-                SHA256Managed provSHA = new SHA256Managed();
                 byte[] passwordBytes = Encoding.UTF8.GetBytes(password);
                 byte[] passwordAndSalt = new byte[passwordBytes.Length + this.Salt.Length];
                 this.Salt.CopyTo(passwordAndSalt, 0);
                 passwordBytes.CopyTo(passwordAndSalt, this.Salt.Length);
+                SHA256Managed provSHA = new SHA256Managed();
 
                 hash = provSHA.ComputeHash(passwordAndSalt);
             }
@@ -130,19 +111,6 @@ namespace VerificaContra
             return true;
         }
 
-        public String GetName()
-        {
-            StringBuilder stringBuilder = new StringBuilder();
-            for (int i = 0; i < NAME_MAX_LENGTH; i++)
-            {
-                if (this.Name[i] == '\0')
-                {
-                    break;
-                }
-                stringBuilder.Append(this.Name[i]);
-            }
-            return stringBuilder.ToString();
-        }
 
         override public String ToString()
         {
@@ -209,10 +177,7 @@ namespace VerificaContra
             {
                 while (reader.BaseStream.Position != reader.BaseStream.Length)
                 {
-                    byte[] lineBytes = reader.ReadBytes(NAME_MAX_LENGTH);
-                    String line = Encoding.UTF8.GetString(lineBytes);
-                    line = line.Replace("\0", "");
-
+                    String line = reader.ReadString();
                     if (line == name)
                     {
                         byte[] salt = reader.ReadBytes(SALT_BYTES);
@@ -231,6 +196,11 @@ namespace VerificaContra
                         {
                             return 2;
                         }
+                    }
+                    else
+                    {
+                        reader.ReadBytes(SALT_BYTES);
+                        reader.ReadBytes(HASH_BYTES);
                     }
                 }
             }
