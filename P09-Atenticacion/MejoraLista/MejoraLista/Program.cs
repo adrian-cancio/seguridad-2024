@@ -19,6 +19,16 @@ namespace MejoraLista
             LU.IniUsu(2, new User("Carlos", "conC", hashMethod));
             LU.IniUsu(3, new User("David", "conD", hashMethod));
             LU.IniUsu(4, new User("Eduardo", "conE", hashMethod));
+            LU.IniUsu(5, new User("Fernando", "conF", hashMethod));
+            LU.IniUsu(6, new User("Gonzalo", "conG", hashMethod));
+            LU.IniUsu(7, new User("Hector", "conH", hashMethod));
+            LU.IniUsu(8, new User("Ismael", "conI", hashMethod));
+            LU.IniUsu(9, new User("Juan", "conJ", hashMethod));
+            LU.IniUsu(10, new User("Kiko", "conK", hashMethod));
+            LU.ModUsu("Antonio", "conA2");
+            LU.ModUsu("Eduardo", "conE2");
+            LU.DelUsu("Benito");
+
             Console.WriteLine("ListaU:");
             LU.VerLista();
 
