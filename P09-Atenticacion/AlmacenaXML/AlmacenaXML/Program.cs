@@ -37,8 +37,8 @@ namespace AlmacenaXML
                 String name = Console.ReadLine();
                 Console.WriteLine("Introduce la contraseña:");
                 String password = Console.ReadLine();
-                //switch (LU2.Verifica(name, password))
-                switch (User.VerificaXML(filename, name, password))
+                switch (LU2.Verifica(name, password))
+                //switch (User.VerificaXML(filename, name, password))
                 {
                     case 1:
                         Console.WriteLine("El usuario no existe.");
