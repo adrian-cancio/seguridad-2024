@@ -103,7 +103,7 @@ namespace BuscarCertificados
             almacen.Close();
 
             // Mostrar cuántos certificados hay en el almacén
-            Console.WriteLine("Numero de certificados: {0}", coleCert.Count);
+            Console.WriteLine("Número de certificados: {0}", coleCert.Count);
 
             // Buscar certificados que coincidan con el nombre distintivo
             // X509FindType.FindBySubjectDistinguishedName: busca por DN completo
@@ -129,7 +129,7 @@ namespace BuscarCertificados
                     
                 default:
                     // Se encontraron múltiples certificados (ambiguo)
-                    Console.WriteLine("Se ha encontrado mas de un certificado");
+                    Console.WriteLine("Se ha encontrado más de un certificado");
                     break;
             }
 
