@@ -65,7 +65,7 @@ namespace CifradoStringAES
             Console.WriteLine();
 
             // Generar una nueva clave aleatoria (sobrescribe la que habíamos establecido)
-            Provider.GenerateKey();
+            // Provider.GenerateKey(); // Eliminado para usar la clave proporcionada
             
             Ayuda ayuda = new Ayuda();
             Console.WriteLine("Clave de cifrado:");
