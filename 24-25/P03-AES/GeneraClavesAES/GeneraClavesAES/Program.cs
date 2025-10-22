@@ -80,7 +80,7 @@ namespace GeneraClavesAES
             Console.WriteLine();
 
             // DEMOSTRACIÓN: Sin resetear, los bytes derivados son diferentes
-            Console.WriteLine("Pero si lo hacemos si reseterar:");
+            Console.WriteLine("Pero si lo hacemos sin resetear:");
             
             // Estos bytes serán diferentes porque continúan desde donde quedó
             byte[] ClaveAES2 = DeriveBytes.GetBytes(AESByteNum);
