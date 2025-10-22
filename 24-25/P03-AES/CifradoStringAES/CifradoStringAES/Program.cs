@@ -54,7 +54,8 @@ namespace CifradoStringAES
             // Configurar el proveedor con nuestros parámetros
             Provider.Key = Clave;
             Provider.Padding = PaddingMode.PKCS7;  // PKCS7 rellena el último bloque si no es múltiplo de 16
-            Provider.Mode = CipherMode.ECB;         // ECB: cada bloque se cifra independientemente (menos seguro que CBC)
+            Provider.Mode = CipherMode.CBC;         // CBC: más seguro, usa IV
+            Provider.IV = VI;                       // Establecer el IV correctamente
 
             // Mostrar las propiedades modificadas
             Console.WriteLine("Provider modified properties:");
