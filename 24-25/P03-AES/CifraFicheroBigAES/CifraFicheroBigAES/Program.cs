@@ -44,7 +44,7 @@ namespace CifraFicheroBigAES
             Console.WriteLine("Mode: " + aes.Mode);
             Console.WriteLine();
 
-            long maxBlockFich = aes.BlockSize * 8; // Maximos bloques cifrados/descifrados de cada vez
+            long maxBlockFich = aes.BlockSize / 8; // Maximos bloques cifrados/descifrados de cada vez
             long tamFich = Ayuda.BytesFichero(NombreFich);
 
             // Generamos la clave y el vector de inicialización
