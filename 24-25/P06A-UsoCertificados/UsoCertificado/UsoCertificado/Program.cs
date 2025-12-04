@@ -15,7 +15,6 @@ namespace UsoCertificado
         {
             string nombreCert = "CN=zpUSU.as";
             X509Certificate2 cert = ExtraeCertificado(nombreCert);
-
             if (cert != null)
             {
                 Console.WriteLine("Certificado encontrado");
@@ -82,12 +81,11 @@ namespace UsoCertificado
             // Verificando la firma con la clave pública
             
             // msg[0] = 0xFF;
-            // firma[0] = 0xFF;
+            // [0] = 0xFF;
 
             bool verifica = provRSA1.VerifyData(msg, "SHA1", firma);
             Console.WriteLine("¿Firma verificada?: {0}", (verifica ? "Sí" : "No"));
             Console.WriteLine();
-
 
 
 
