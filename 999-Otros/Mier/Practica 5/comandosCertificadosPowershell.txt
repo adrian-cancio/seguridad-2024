@@ -1,0 +1,16 @@
+Script: Este script simplemente utiliza el cmdlet New-SelfSignedCertificate para generar un nuevo 
+certificado autofirmado y su clave privada asociada. El certificado se carga en el almacén de 
+certificados del usuario y su clave asociada en el almacén de claves del usuario. Además, ambos 
+elementos (certificado y su clave) se asignan a la variable $cert, para su posterior uso en la sesión 
+de PowerShell.
+
+cert = New-SelfSignedCertificate -Type Custom ` -Subject "CN=zpac.as" ` -KeyAlgorithm RSA -KeyLength 2048 -KeySpec Signature -KeyExportPolicy Exportable ` -KeyUsageProperty All -KeyUsage None ` -Provider "Microsoft Enhanced RSA and AES Cryptographic Provider" ` -NotBefore (Get-Date) ` -NotAfter (Get-Date).AddYears(10) ` -HashAlgorithm sha256 ` -TextExtension @("2.5.29.19={critical}{text}ca=1") ` -CertStoreLocation "Cert:\CurrentUser\My"
+
+Script: Ahora se puede generar un certificado para un servidor con el siguiente script
+
+New-SelfSignedCertificate -Type Custom ` -Subject "CN=zpser.as" -DnsName "zpser.as", "www.zpser.es", "www.zpser.com" ` -KeyAlgorithm RSA -KeyLength 2048 -KeySpec KeyExchange -KeyExportPolicy Exportable ` -KeyUsageProperty All -KeyUsage None ` -Provider "Microsoft Enhanced RSA and AES Cryptographic Provider" ` -NotBefore (Get-Date) ` -NotAfter (Get-Date).AddYears(5) ` -HashAlgorithm sha256 ` -Signer $cert ` -CertStoreLocation "Cert:\CurrentUser\My"
+
+Script: Repite los pasos realizados para generar un certificado de usuario:
+
+New-SelfSignedCertificate -Type Custom ` -Subject "CN=zpusu.as" -DnsName "zpusu.as" ` -KeyAlgorithm RSA -KeyLength 2048 -KeySpec KeyExchange -KeyExportPolicy Exportable ` -KeyUsageProperty All -KeyUsage None ` -Provider "Microsoft Enhanced Cryptographic Provider v1.0" ` -NotBefore (Get-Date) ` -NotAfter (Get-Date).AddYears(5) ` -HashAlgorithm sha256 ` -Signer $cert ` -CertStoreLocation "Cert:\CurrentUser\My"
+

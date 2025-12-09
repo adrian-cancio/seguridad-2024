@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.11.34929.205
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ejercicio2_AUDITA", "Ejercicio2_AUDITA.csproj", "{BFCAFD5A-AA14-4AD6-ACF8-54BBBAA3019A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BFCAFD5A-AA14-4AD6-ACF8-54BBBAA3019A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BFCAFD5A-AA14-4AD6-ACF8-54BBBAA3019A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BFCAFD5A-AA14-4AD6-ACF8-54BBBAA3019A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BFCAFD5A-AA14-4AD6-ACF8-54BBBAA3019A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {93DF332C-56F0-4489-8B36-31577B20F578}
+	EndGlobalSection
+EndGlobal

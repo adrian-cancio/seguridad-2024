@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.11.35312.102
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UsoCertificados_y_CMS-PKCS7", "UsoCertificados_y_CMS-PKCS7.csproj", "{FD2684B3-0505-4200-8EA8-BB69F6C5CD37}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FD2684B3-0505-4200-8EA8-BB69F6C5CD37}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FD2684B3-0505-4200-8EA8-BB69F6C5CD37}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FD2684B3-0505-4200-8EA8-BB69F6C5CD37}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FD2684B3-0505-4200-8EA8-BB69F6C5CD37}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {6705E2E6-A686-4FB4-8E92-F18955F1E361}
+	EndGlobalSection
+EndGlobal

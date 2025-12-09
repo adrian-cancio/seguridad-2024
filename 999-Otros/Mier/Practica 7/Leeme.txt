@@ -1,0 +1,1 @@
+La contraseñas para usar los ficheros pfx están en el guion de práctica 5 en la sección de MakeCert
